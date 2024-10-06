@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landsat Data Explorer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Landsat Data Explorer</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">Location Selection</h2>
+                <div id="map" class="h-96"></div>
+                <div class="mt-4 grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Latitude</label>
+                        <input type="number" id="latitude" step="0.000001" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Longitude</label>
+                        <input type="number" id="longitude" step="0.000001" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                    </div>
+                </div>
+                <button id="searchButton" class="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Search Landsat Scenes
+                </button>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">Available Scenes</h2>
+                <div id="sceneList" class="space-y-2">
+                    <p class="text-gray-500">Select a location to see available scenes</p>
+                </div>
+            </div>
+        </div>
+        
+        <div id="dataSection" class="mt-8 bg-white p-6 rounded-lg shadow hidden">
+            <h2 class="text-xl font-semibold mb-4">Spectral Data</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-medium mb-2">3x3 Pixel Grid</h3>
+                    <div id="pixelGrid" class="grid grid-cols-3 gap-1">
+                        <!-- Pixels will be inserted here by JavaScript -->
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-medium mb-2">Spectral Signature</h3>
+                    <canvas id="spectralChart"></canvas>
+                </div>
+            </div>
+            <div class="mt-4 flex justify-end space-x-4">
+                <button id="downloadGridCSV" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    Download Grid CSV
+                </button>
+                <button id="downloadCenterCSV" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                    Download Center Pixel CSV
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
